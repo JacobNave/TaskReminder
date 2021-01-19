@@ -21,8 +21,8 @@ if __name__ == '__main__':
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
-        to="+12106189141",
-        from_= "+16467989659",
+        to=accout_file.readline(),
+        from_= accout_file.readline(),
         body = task_string
     )
 
