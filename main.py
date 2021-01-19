@@ -4,6 +4,7 @@ from createdb import getNextTasks
 from createdb import allTasks
 from createdb import clearTasks
 from createdb import removeTask
+from createdb import  getNextWeek
 from twilio.rest import Client
 
 
@@ -17,6 +18,13 @@ if __name__ == '__main__':
     task_string = 'Tomorrows task:\n'
     for i in range(len(tasks)):
         task_string += str(i+1) + '. ' + tasks[i][1] + ': ' + tasks[i][3] + '\n'
+
+    task_string+= '\nOther Tasks This Week:\n'
+
+    week_tasks = getNextWeek()
+    for i in range(len(week_tasks)):
+        task_string += str(i+1) + '. ' + week_tasks[i][1] + ' ' + str(week_tasks[3]) + '\n'
+
 
     client = Client(account_sid, auth_token)
 

@@ -21,6 +21,15 @@ def getNextTasks():
     tasks = cursor.execute('SELECT * FROM Tasks WHERE TaskDate = ?', (tomorrow,)).fetchall()
     return tasks
 
+def getNextWeek():
+    conn = sqlite3.connect('tasks.db')
+    cursor = conn.cursor()
+
+    tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+    weekend = datetime.date.today() + datetime.timedelta(days=7)
+    tasks = cursor.execute('SELECT * FROM Tasks WHERE TaskDate > ? AND TaskDate <= ?', (tomorrow, weekend)).fetchall()
+    return tasks
+
 def removeTask(id):
     conn = sqlite3.connect('tasks.db')
     cursor = conn.cursor()
@@ -42,6 +51,13 @@ def clearTasks():
     cursor.execute('DELETE FROM Tasks')
     conn.commit()
 
+def removeOldTasks():
+    conn = sqlite3.connect('tasks.db')
+    cursor = conn.cursor()
+
+    today = datetime.date.today()
+    cursor.execute('DELETE FROM Tasks WHERE TaskDate < ?', (today,))
+    conn.commit()
 
 #PLACEHOLDER CHANGE LATER
 def checkDate():
