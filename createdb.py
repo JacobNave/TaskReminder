@@ -21,6 +21,13 @@ def getNextTasks():
     tasks = cursor.execute('SELECT * FROM Tasks WHERE TaskDate = ?', (tomorrow,)).fetchall()
     return tasks
 
+def removeTask(id):
+    conn = sqlite3.connect('tasks.db')
+    cursor = conn.cursor()
+
+    cursor.execute('DELETE FROM Tasks WHERE TaskID = ?', (id,))
+    conn.commit()
+
 def allTasks():
     conn = sqlite3.connect('tasks.db')
     cursor = conn.cursor()
